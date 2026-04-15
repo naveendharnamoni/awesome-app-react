@@ -40,5 +40,6 @@ store.subscribe(() =>{
 
 //dispatch actions
 store.dispatch({type:"increment_ctr"});
-store.dispatch({type:"decrement_ctr"});
 store.dispatch({type:"update_ctr", value: 100});
+store.dispatch({type:"decrement_ctr"});
+
