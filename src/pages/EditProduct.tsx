@@ -9,16 +9,16 @@ function EditProduct() {
   const id = Number(params.id);
   const [product, setProduct] = useState<Product>(new Product(id));
 
-  useEffect(() =>{
+  useEffect(() => {
     getProduct(id);
-  },[])
+  }, []);
 
   let navigate = useNavigate();
 
   async function getProduct(id: Number) {
     try {
       let response = await axios.get<Product>(url + id);
-      let productCopy = {...response.data}
+      let productCopy = { ...response.data };
       setProduct(productCopy);
 
       console.log(response.data);
@@ -26,29 +26,29 @@ function EditProduct() {
       alert("error while getting product");
     }
   }
-  async function saveProduct(e: MouseEvent<HTMLButtonElement>){
+  async function saveProduct(e: MouseEvent<HTMLButtonElement>) {
     try {
-        e.preventDefault();
-        let response = await axios.put<Product>(url + id, product);
-        navigate("/products");
+      e.preventDefault();
+      let response = await axios.put<Product>(url + id, product);
+      navigate("/products");
     } catch (error) {
-        alert("error while updating");
+      alert("error while updating");
     }
   }
-  function handleNameChange(e: ChangeEvent<HTMLInputElement>){
+  function handleNameChange(e: ChangeEvent<HTMLInputElement>) {
     product.name = e.target.value;
-    let productCopy = {...product}
+    let productCopy = { ...product };
     setProduct(productCopy);
   }
 
-  function handleChange(e: ChangeEvent<HTMLInputElement>){
+  function handleChange(e: ChangeEvent<HTMLInputElement>) {
     product[e.target.name] = e.target.value;
     console.log(e.target.name);
-    let productCopy = {...product}
+    let productCopy = { ...product };
     setProduct(productCopy);
   }
 
-  function handleCancel(){
+  function handleCancel() {
     navigate(-1);
   }
 
@@ -96,13 +96,9 @@ function EditProduct() {
         <button type="submit" className="btn btn-success" onClick={saveProduct}>
           Save
         </button>
-        <button
-                  type="button"
-                  className="btn btn-info"
-                  onClick={handleCancel}
-                >
-                  Cancel
-                </button>
+        <button type="button" className="btn btn-info" onClick={handleCancel}>
+          Cancel
+        </button>
       </form>
     </div>
   );
