@@ -1,25 +1,38 @@
 import { useEffect, useRef, useState, type MouseEvent } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const usernameInputRef = useRef<HTMLInputElement>(null);
-
+  let navigate = useNavigate();
   useEffect(() => {
     console.log("LoginPage Mount");
     usernameInputRef.current?.focus();
 
-    return() => {
-        console.log("LoginPage Unmount");
-    }
+    return () => {
+      console.log("LoginPage Unmount");
+    };
   }, []);
 
-  function login(e: MouseEvent<HTMLButtonElement>) {
+  async function login(e: MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
     if (username && password) {
-      //
-      setMessage("");
+      try {
+        const url = "http://localhost:9000/login";
+        const data = {
+          name: username,
+          password: password,
+        };
+        let response = await axios.post(url, data);
+        console.log(response);
+        setMessage("");
+        navigate("/");
+      } catch (error) {
+        setMessage("Please enter valid creds");
+      }
     } else {
       setMessage("Please enter valid creds");
     }

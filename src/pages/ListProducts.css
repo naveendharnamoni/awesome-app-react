@@ -1,0 +1,10 @@
+.product{
+ border: 2px solid teal;
+ background-color: aliceblue;
+ border-radius: 5px;
+ height: 280px;
+ width: 300px;
+ margin: 7px;
+ padding: 7px;
+
+}
