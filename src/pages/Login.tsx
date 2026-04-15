@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, type MouseEvent } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { useTitle } from "../hooks/useTitle";
 
 function LoginPage() {
   const [username, setUsername] = useState("");
@@ -12,11 +13,11 @@ function LoginPage() {
   let navigate = useNavigate();
 
   const dispatch = useDispatch();
-
+  
+  useTitle("Login");
   useEffect(() => {
     console.log("LoginPage Mount");
     usernameInputRef.current?.focus();
-
     return () => {
       console.log("LoginPage Unmount");
     };

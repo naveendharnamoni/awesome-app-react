@@ -6,14 +6,29 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import type { AppState } from "../redux/store";
 import { useTitle } from "../hooks/useTitle";
-import { useProducts } from "../hooks/useProducts";
 
 function ListProductsPage() {
   let url = "http://localhost:9000/secure_products";
-
+  const [products, setProducts] = useState<Product[]>([]);
   const navigate = useNavigate();
+  const authState = useSelector((state: AppState) => state.auth);
+
   useTitle("Products");
-  const { products, setProducts } = useProducts(url);
+  
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
+  async function fetchProducts() {
+    try {
+      const headers = { Authorization: `Bearer ${authState.accessToken}` };
+      let response = await axios.get<Product[]>(url, { headers: headers });
+      setProducts(response.data);
+      console.log(products);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   async function handleDelete(product: Product) {
     try {
