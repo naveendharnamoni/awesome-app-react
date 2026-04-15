@@ -1,13 +1,18 @@
 import { useEffect, useRef, useState, type MouseEvent } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const usernameInputRef = useRef<HTMLInputElement>(null);
+
   let navigate = useNavigate();
+
+  const dispatch = useDispatch();
+
   useEffect(() => {
     console.log("LoginPage Mount");
     usernameInputRef.current?.focus();
@@ -29,9 +34,19 @@ function LoginPage() {
         let response = await axios.post(url, data);
         console.log(response);
         setMessage("");
+        dispatch({
+          type: "login",
+          payload: {
+            isAuthenticated: true,
+            accessToken: response.data.accessToken,
+            refreshToken: response.data.refreshToken,
+            username,
+          },
+        });
         navigate("/");
       } catch (error) {
         setMessage("Please enter valid creds");
+        dispatch({type:'logout'})
       }
     } else {
       setMessage("Please enter valid creds");
