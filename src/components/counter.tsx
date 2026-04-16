@@ -1,12 +1,12 @@
 import type React from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface CounterProps {
   initCount: number;
 }
 const Counter: React.FC<CounterProps> = ({ initCount }) => {
   const [count, setCount] = useState(initCount);
-  
+  let clickCount = useRef(0);
     useEffect(() =>{
         console.log("Count Updated");
         
@@ -19,6 +19,9 @@ const Counter: React.FC<CounterProps> = ({ initCount }) => {
     //   console.log("count value", count);
     //   return count + 1;
     // });
+    clickCount.current++;
+    console.log("clickcount", clickCount.current);
+    
   }
   return (
     <div>
