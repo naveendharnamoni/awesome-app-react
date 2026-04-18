@@ -6,6 +6,7 @@ import ListProductsPage from "./pages/ListProducts";
 import EditProduct from "./pages/EditProduct";
 import GadgetStorePage from "./pages/GadgetStorePage";
 import ViewCartPage from "./pages/ViewCart";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
 
@@ -19,10 +20,10 @@ function App() {
         <Routes>
           <Route path="/" element = {<Counter initCount={5}/>} />
           <Route path="/products" element = {<ListProductsPage/>} />
-          <Route path="/gadgets" element = {<GadgetStorePage/>} />
+          <Route path="/gadgets" element = {<ProtectedRoute><GadgetStorePage/></ProtectedRoute>} />
           <Route path="/viewcart" element = {<ViewCartPage/>} />
           <Route path="/login" element = {<LoginPage/>} />
-          <Route path="/products/:id" element = {<EditProduct/>} />
+          <Route path="/products/:id" element = {<ProtectedRoute><EditProduct/></ProtectedRoute>} />
         </Routes>
       </main>
     </div>
